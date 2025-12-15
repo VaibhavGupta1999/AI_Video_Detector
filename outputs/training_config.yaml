@@ -1,0 +1,37 @@
+augmentation:
+  enabled: true
+  feature_dropout: 0.05
+  frame_drop_prob: 0.05
+  jitter_prob: 0.3
+  noise_std: 0.002
+dataset:
+  feature_dim: 1536
+  feature_dir: ./Features
+  sequence_length: 64
+  train_csv: null
+  val_csv: null
+  val_split: 0.2
+loss:
+  focal_alpha: 0.5
+  focal_gamma: 2.0
+  type: focal
+model:
+  dropout: 0.2
+  feedforward_dim: 512
+  hidden_dim: 256
+  num_heads: 4
+  num_layers: 4
+  use_attention_pooling: true
+output:
+  dir: ./outputs
+  model_name: best_model.pth
+  save_every_epoch: false
+training:
+  batch_size: 8
+  early_stop_patience: 7
+  epochs: 3
+  grad_clip: 1.0
+  learning_rate: 0.0001
+  min_epochs: 10
+  stratified_split: true
+  weight_decay: 1.0e-05

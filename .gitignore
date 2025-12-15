@@ -36,21 +36,17 @@ env/
 # Jupyter Notebooks
 .ipynb_checkpoints/
 
-# Dataset (large files - don't commit)
+# Dataset (large video files - don't commit)
 Dataset/
-Features/
-*.npy
 *.mp4
 *.avi
 *.mov
 
-# Model outputs (optional - may want to commit best model)
-outputs/
-*.pth
+# Note: Features/ and outputs/ are intentionally NOT ignored
+# They contain extracted features and trained models needed for reproducibility
 
 # Logs
 *.log
-training_logs.txt
 
 # OS files
 .DS_Store

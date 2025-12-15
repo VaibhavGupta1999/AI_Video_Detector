@@ -1,0 +1,11 @@
+video_id,true_label,predicted_label,confidence,correct,true_class,predicted_class
+msrvtt_19,0.0,0.0,0.38612545,1,Real,Real
+msrvtt_15,0.0,0.0,0.18028511,1,Real,Real
+msrvtt_22,0.0,1.0,0.5581857,0,Real,Fake
+msrvtt_4,0.0,0.0,0.49467257,1,Real,Real
+hotshot_18,1.0,1.0,0.8882748,1,Fake,Fake
+hotshot_9,1.0,1.0,0.5464098,1,Fake,Fake
+hotshot_24,1.0,1.0,0.6200674,1,Fake,Fake
+hotshot_2,1.0,1.0,0.7505017,1,Fake,Fake
+msrvtt_16,0.0,0.0,0.40613875,1,Real,Real
+hotshot_6,1.0,1.0,0.6856175,1,Fake,Fake
