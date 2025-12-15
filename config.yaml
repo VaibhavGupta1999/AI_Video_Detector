@@ -1,0 +1,72 @@
+# Configuration for Deepfake Detection Pipeline
+# All training parameters in one place for reproducibility
+
+dataset:
+  train_csv: null  # Optional: path to training CSV with video_id, label columns
+  val_csv: null    # Optional: path to validation CSV
+  feature_dir: "./Features"  # Directory containing .npy feature files
+  sequence_length: 64        # Fixed sequence length (pad/truncate to this)
+  feature_dim: 1536          # EfficientNet-B3 output dimension
+  val_split: 0.2             # Validation split if no CSV provided
+
+training:
+  batch_size: 8
+  epochs: 30
+  learning_rate: 0.0001      # 1e-4
+  weight_decay: 0.00001      # 1e-5 for AdamW
+  grad_clip: 1.0             # Max gradient norm
+  early_stop_patience: 7     # Stop if no improvement for N epochs
+  min_epochs: 10             # Minimum epochs before early stopping can trigger
+  stratified_split: true     # Use stratified train/val split for balanced classes
+
+model:
+  num_layers: 4              # Deep: 4 layers for hierarchical temporal patterns
+  num_heads: 4               # Attention heads
+  hidden_dim: 256            # Projection dimension (from 1536)
+  feedforward_dim: 512       # FFN hidden dimension
+  dropout: 0.2               # Dropout rate
+  use_attention_pooling: true  # Attention pooling learns which frames matter
+
+loss:
+  type: focal                # 'focal' for hard example mining, or 'bce'
+  focal_alpha: 0.5           # Class balance factor (0.5 = balanced)
+  focal_gamma: 2.0           # Focus on hard examples (higher = more focus)
+
+augmentation:
+  enabled: true              # Enable/disable augmentation during training
+  frame_drop_prob: 0.05      # Max 5% of frames dropped
+  noise_std: 0.002           # Light Gaussian noise on features
+  jitter_prob: 0.3           # Probability of temporal jitter
+  feature_dropout: 0.05      # Random feature dimension dropout
+
+output:
+  dir: "./outputs"
+  model_name: "best_model.pth"
+  save_every_epoch: false    # Save checkpoint after every epoch
+
+# ============================================================
+# CONFIG-DRIVEN TRAINING BENEFITS:
+# 1. Reproducibility - exact same config = exact same experiment
+# 2. Traceability - config is saved alongside model checkpoint
+# 3. Experimentation - easy to try different hyperparameters
+# 4. Engineering maturity - no magic numbers in code
+# ============================================================
+
+# ============================================================
+# KEY IMPROVEMENTS IN THIS CONFIG:
+#
+# 1. DEEP MODEL (4 layers, Pre-LN)
+#    - Learns hierarchical temporal patterns
+#    - Stable gradients through all layers
+#    - Expected improvement: +5-10% accuracy
+#
+# 2. ATTENTION POOLING
+#    - Model LEARNS which frames matter
+#    - Suspicious frames get higher attention weight
+#    - Expected improvement: +2-5% accuracy
+#
+# 3. FOCAL LOSS
+#    - Handles class imbalance (α parameter)
+#    - Focuses on hard examples (γ parameter)
+#    - Expected improvement: +3-8% accuracy
+# ============================================================
